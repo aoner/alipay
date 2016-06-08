@@ -18,15 +18,6 @@ module Alipay
       end
     end
 
-    ALIPAY_RSA_PUBLIC_KEY = <<-EOF
------BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRA
-FljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQE
-B/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5Ksi
-NG9zpgmLCUYuLkxpLQIDAQAB
------END PUBLIC KEY-----
-    EOF
-
     def self.verify?(params, options = {})
       params = Utils.stringify_keys(params)
 
@@ -39,7 +30,7 @@ NG9zpgmLCUYuLkxpLQIDAQAB
         key = options[:key] || Alipay.key
         MD5.verify?(key, string, sign)
       when 'RSA'
-        RSA.verify?(ALIPAY_RSA_PUBLIC_KEY, string, sign)
+        RSA.verify?(Alipay.public_key, string, sign)
       when 'DSA'
         DSA.verify?(string, sign)
       else
