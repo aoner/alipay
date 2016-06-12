@@ -24,9 +24,6 @@ module Alipay
       sign_type = params.delete('sign_type')
       sign = params.delete('sign')
       string = params_to_string(params)
-      p "sign_type" + sign_type
-      p "sign" + sign
-      p "string" + string
 
       case sign_type
       when 'MD5'
